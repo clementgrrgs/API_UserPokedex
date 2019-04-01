@@ -62,36 +62,37 @@ router.route('/')
 
 router.route('/users/:user_id')
     .get((req,res) => {
-        User.findById(req.params.user_id, function(err, user) {
+        User.findById(req.params.user_id, function (err, user) {
             if (err)
                 res.send(err);
             res.json(user);
-    })
-    .put((req,res) => {
-        User.findById(req.params.user_id, function(err, user) {
-            if (err){
+        })
+    .put((req, res) => {
+        User.findById(req.params.user_id, function (err, user) {
+            if (err) {
                 res.send(err);
             }
             user.pseudo = req.body.pseudo;
             user.nbPokemon = req.body.nbPokemon;
             user.friends = req.body.friends;
             user.pokemons = req.body.pokemons;
-            user.save(function(err){
-                if(err){
+            user.save(function (err) {
+                if (err) {
                     res.send(err);
                 }
-                res.json({message : 'Bravo, mise à jour des données OK'});
+                res.json({message: 'Bravo, mise à jour des données OK'});
             });
         });
     })
-    .delete((req,res) => {
-        User.remove({_id: req.params.user_id}, function(err, user){
-            if (err){
+    .delete((req, res) => {
+        User.remove({_id: req.params.user_id}, function (err, user) {
+            if (err) {
                 res.send(err);
             }
-            res.json({message:"user deleted"});
+            res.json({message: "user deleted"});
         });
-    });
+    })
+});
 
 
 
