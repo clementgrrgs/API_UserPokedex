@@ -66,7 +66,8 @@ router.route('/users/:user_id')
             if (err)
                 res.send(err);
             res.json(user);
-        })
+        });
+    })
     .put((req, res) => {
         User.findById(req.params.user_id, function (err, user) {
             if (err) {
@@ -80,7 +81,7 @@ router.route('/users/:user_id')
                 if (err) {
                     res.send(err);
                 }
-                res.json({message: 'Bravo, mise à jour des données OK'});
+                res.json({message: 'user updated'});
             });
         });
     })
@@ -91,8 +92,7 @@ router.route('/users/:user_id')
             }
             res.json({message: "user deleted"});
         });
-    })
-});
+    });
 
 
 
