@@ -25,7 +25,7 @@ var UserSchema = mongoose.Schema({
     pseudo: String,
     nbPokemon: Number,
     friends: [String],
-    pokemons: [Number]
+    pokemons: [Object]
 });
 
 var User = mongoose.model('User', UserSchema);
@@ -49,7 +49,7 @@ router.route('/users')
             if(err){
                 res.send(err);
             }
-            res.send({message : 'User insert'});
+            res.send(user);
         })
     });
 
@@ -60,29 +60,20 @@ router.route('/')
     });
 
 
-router.route('/users/:user_id')
+router.route('/users/:user_pseudo')
     .get((req,res) => {
-        User.findById(req.params.user_id, function (err, user) {
+        User.find({pseudo: req.params.user_pseudo} , function (err, user) {
             if (err)
                 res.send(err);
             res.json(user);
         });
     })
     .put((req, res) => {
-        User.findById(req.params.user_id, function (err, user) {
+        User.findByIdAndUpdate(req.body._id,req.body,(err, user) => {
             if (err) {
                 res.send(err);
             }
-            user.pseudo = req.body.pseudo;
-            user.nbPokemon = req.body.nbPokemon;
-            user.friends = req.body.friends;
-            user.pokemons = req.body.pokemons;
-            user.save(function (err) {
-                if (err) {
-                    res.send(err);
-                }
-                res.json({message: 'user updated'});
-            });
+            res.json(user);
         });
     })
     .delete((req, res) => {
